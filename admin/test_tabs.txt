@@ -1,0 +1,61 @@
+<?php 
+
+$empresas = array('alfa', 'beta')
+
+foreach(
+
+$query = "SELECT * FROM dataEquipos WHERE universo = {$i} AND empresa = 'alfa'";
+
+$result = mysql_query($query, $connection);
+
+confirm_query ($result); 
+
+$alfa_rows = mysql_num_rows($result);
+
+$alfa = mysql_fetch_array($result);
+
+?>
+
+<ul>
+
+		<?php 
+
+			for ($j = 1; $j <= $alfa_rows; $j++) {
+
+				echo "<li><a href='#tabs-u".$i."-i".$j."'>Integrante ".$j."</a></li>";
+
+			}
+
+		 ?>
+
+</ul>
+
+<?php
+
+for ($j = 1; $j <= $alfa_rows; $j++) {
+
+	$query = "SELECT * FROM dataEquipos WHERE universo = {$i} AND empresa = 'alfa' AND integrante = {$i} LIMIT 1";
+
+	$result = mysql_query($query, $connection);
+
+	confirm_query ($result); 
+
+	$result = mysql_fetch_array($result);
+
+?>
+
+
+
+<div id="tabs-u<?php echo $i."-i".$j;?>" class="integrante">
+
+  <p>Nombre y apellido: <?php echo $result['nombre']." ".$result['apellido'];?></p>
+
+  <p>Estilo Personal: <?php echo $result['estilo'];?></p>
+
+  <p>Rol: <?php echo $result['rol'];?></p>
+
+  <p>Breve descripci&oacute;n del rol: <?php echo $result['rol_desc'];?></p>
+
+</div>
+
+<?php } ?>
